@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 using System.Globalization;
 
 namespace RomanAirport
-{
-    
+{   
     public enum KindOfFlight
     {
         Arrival,
@@ -25,19 +24,21 @@ namespace RomanAirport
         ExpectedAt,
         Delayed
     }
+
     //The structure of a search result
      struct SearcResult
     {
-        public Flight someflight;
+        public Flight SomeFlight;
         public KindOfFlight kindoflight;
         public int someindex;
-        public SearcResult(Flight someflight, KindOfFlight kindoflight, int someindex)
+        public SearcResult(Flight SomeFlight, KindOfFlight kindoflight, int someindex)
         {
-            this.someflight = someflight;
+            this.SomeFlight = SomeFlight;
             this.kindoflight = kindoflight;
             this.someindex = someindex;
         }
     }
+
     //Status of a flight
      struct Flight
     {
@@ -55,8 +56,7 @@ namespace RomanAirport
             "the terminal: {4}, the kind of a flight: {5}, the flightstatus:{6}",
             this.number, this.city,this.at,this.airline, this.terminal, this.kind, this.status );
         }
-    }
-    
+    }    
 
     class Program
     {
@@ -67,6 +67,7 @@ namespace RomanAirport
         static int x = 0;
         static int y = 0;
         static  SearcResult somef;
+
         public static void PauseProg()
         {
             
@@ -74,6 +75,7 @@ namespace RomanAirport
             Console.ReadLine();
             Console.Clear();
         }
+
         //Enter a date with time
         public static DateTime TimeEnter()
         {
@@ -95,7 +97,7 @@ namespace RomanAirport
         public static KindOfFlight Choice()
         {
             Console.WriteLine("Enter a kind of flight:1-arrival, 2 -departure");
-            int choice =int.Parse(Console.ReadLine());
+            int choice = int.Parse(Console.ReadLine());
             if (choice == 1)
                 return KindOfFlight.Departure;
             else
@@ -110,61 +112,11 @@ namespace RomanAirport
                 return (FlightStatus)choice;
             else
                 return FlightStatus.Unknown;
-            //switch (choice)
-            //{
-            //    case 1:
-            //        {
-            //            return FlightStatus.CheckIn;
-
-            //        }
-            //    case 2:
-            //        {
-            //            return FlightStatus.GateClosed;
-
-            //        }
-            //    case 3:
-            //        {
-            //            return FlightStatus.Arrived;
-
-            //        }
-            //    case 4:
-            //        {
-            //            return FlightStatus.DepartedAt;
-
-            //        }
-            //    case 5:
-            //        {
-            //            return FlightStatus.Unknown;
-
-            //        }
-            //    case 6:
-            //        {
-            //            return FlightStatus.Canceled;
-
-            //        }
-            //    case 7:
-            //        {
-            //            return FlightStatus.ExpectedAt;
-
-            //        }
-            //    case 8:
-            //        {
-            //            return FlightStatus.Delayed;
-
-            //        }
-            //    default:
-            //        {
-            //            return FlightStatus.Unknown;
-
-            //        }
-            //}
-
         }
 
         public static void SearchByCityAndCloseTime(string city, DateTime searchdate = default(DateTime))
         {
             int maxlength = (arrivals.Length > departures.Length) ? arrivals.Length: departures.Length;
-
             for (int i = 0; i < maxlength; i++)
             {
                 if ((searchdate == default(DateTime)) && (city.Length>0))
@@ -187,11 +139,7 @@ namespace RomanAirport
                         Console.WriteLine(departures[i].ToString());
                     }
                 }
-
             }
-
-           
-
         }
 
         public static SearcResult? SearchByNumberOrArrivalTime(int flightnumner, KindOfFlight kind, DateTime searchdate = default(DateTime))
@@ -224,7 +172,7 @@ namespace RomanAirport
             return null;
         }
 
-        public static void sortmassiv(ref Flight[] flights)
+        public static void SortArray(ref Flight[] flights)
         {
             for (int i = 0; i < flights.Length; i++)
             {
@@ -238,33 +186,19 @@ namespace RomanAirport
                     }
                 }
             }
-
         }
 
-
         public static bool IsNymberUnique(int flightnumner, KindOfFlight kind)
-        {
-                       
-           
+        {          
             if (SearchByNumberOrArrivalTime(flightnumner, kind).HasValue )
                 return false;
             else
                 return true;
         }
+
         public static void FillStructure(KindOfFlight kind, out Flight ourflight )
         {
-            ourflight = new Flight();
-            //Console.WriteLine("Enter a year:");
-            //int year =int.Parse( Console.ReadLine());
-            //Console.WriteLine("Enter a month(1-12):");
-            //int montrh = int.Parse(Console.ReadLine());
-            //Console.WriteLine("Enter a day(1-30):");
-            //int day = int.Parse(Console.ReadLine());
-            //Console.WriteLine("Enter an hour(0-23):");
-            //int hour = int.Parse(Console.ReadLine());
-            //Console.WriteLine("Enter an minute(0-59):");
-            //int minute = int.Parse(Console.ReadLine());
-            //ourflight.at = new DateTime(year, montrh, day, hour,minute, 0);
+            ourflight = new Flight();            
             ourflight.at = TimeEnter();
             Console.WriteLine("Air line:");
             ourflight.airline = Console.ReadLine();
@@ -283,10 +217,8 @@ namespace RomanAirport
                 Console.WriteLine("Not a unique number!!!");
                 return;
             }
-
             if (ourflight.kind == KindOfFlight.Arrival)
-            {
-                
+            {                
                 arrivals[x] = ourflight;
                 x++;
             }
@@ -295,8 +227,6 @@ namespace RomanAirport
                 departures[y] = ourflight;
                 y++;
             }
-        
-
         }
 
         public static void EditStructure(KindOfFlight kind, int number)
@@ -306,27 +236,24 @@ namespace RomanAirport
                 somef = (SearcResult)somef1;
             else
                 return;
-            Console.WriteLine("Current city is: {0}", somef.someflight.city);
+            Console.WriteLine("Current city is: {0}", somef.SomeFlight.city);
             Console.WriteLine("New city is:");
-            somef.someflight.city = Console.ReadLine();
-            Console.WriteLine("Current airline is: {0}", somef.someflight.airline);
+            somef.SomeFlight.city = Console.ReadLine();
+            Console.WriteLine("Current airline is: {0}", somef.SomeFlight.airline);
             Console.WriteLine("New airline is:");
-            somef.someflight.city = Console.ReadLine();
-            Console.WriteLine("Current terminal is: {0}", somef.someflight.terminal);
+            somef.SomeFlight.city = Console.ReadLine();
+            Console.WriteLine("Current terminal is: {0}", somef.SomeFlight.terminal);
             Console.WriteLine("New terminal is:");
-            somef.someflight.terminal = int.Parse( Console.ReadLine());
+            somef.SomeFlight.terminal = int.Parse( Console.ReadLine());
             if (kind == KindOfFlight.Arrival)
             {
-                arrivals[somef.someindex] = somef.someflight;
+                arrivals[somef.someindex] = somef.SomeFlight;
 
             }
             else
             {
-                departures[somef.someindex] = somef.someflight;
+                departures[somef.someindex] = somef.SomeFlight;
             }
-
-
-
         }
 
         public static void DeleteStructure(KindOfFlight kind, int number)
@@ -336,25 +263,70 @@ namespace RomanAirport
                 somef = (SearcResult)somef1;
             else
                 return;
-            somef.someflight.status = FlightStatus.Canceled;
-            Console.WriteLine("The flight № {0} is canceled", somef.someflight.number);
+            somef.SomeFlight.status = FlightStatus.Canceled;
+            Console.WriteLine("The flight № {0} is canceled", somef.SomeFlight.number);
             if (kind == KindOfFlight.Arrival)
             {
-                arrivals[somef.someindex] = somef.someflight;
+                arrivals[somef.someindex] = somef.SomeFlight;
 
             }
             else
             {
-                departures[somef.someindex] = somef.someflight;
+                departures[somef.someindex] = somef.SomeFlight;
             }
         }
+
         static void Main(string[] args)
-        {
-            int numberX;
-            //FlightStatus proba = (FlightStatus) 5;
+        {            
+            int numberX;           
             //10 flights totally
             arrivals = new Flight[10];
             departures = new Flight[10];
+            //Enter the test data
+            //Arrival 1
+            Flight ourflightstart1 = new Flight();
+            ourflightstart1.at = DateTime.Now.AddHours(6);
+            ourflightstart1.airline = "Aerosweet";
+            ourflightstart1.number = 784;
+            ourflightstart1.city = "Istanbul";
+            ourflightstart1.terminal = 8;
+            ourflightstart1.kind = KindOfFlight.Arrival;
+            ourflightstart1.status = FlightStatus.Delayed;
+            arrivals[x] = ourflightstart1;
+            x++;
+            //Departure 1
+            Flight ourflightstart2 = new Flight();
+            ourflightstart2.at = DateTime.Now.AddHours(3);
+            ourflightstart2.airline = "FlyEmirates";
+            ourflightstart2.number = 611;
+            ourflightstart2.city = "Madrid";
+            ourflightstart2.terminal = 6;
+            ourflightstart2.kind = KindOfFlight.Departure;
+            ourflightstart2.status = FlightStatus.GateClosed;
+            departures[y] = ourflightstart2;
+            y++;
+            //Arrival 2
+            Flight ourflightstart3 = new Flight();
+            ourflightstart3.at = DateTime.Now.AddHours(2);
+            ourflightstart3.airline = "AirFrance";
+            ourflightstart3.number = 529;
+            ourflightstart3.city = "new York";
+            ourflightstart3.terminal = 3;
+            ourflightstart3.kind = KindOfFlight.Arrival;
+            ourflightstart3.status = FlightStatus.CheckIn;
+            arrivals[x] = ourflightstart3;
+            x++;
+            //Departure 2
+            Flight ourflightstart4 = new Flight();
+            ourflightstart4.at = DateTime.Now.AddHours(1);
+            ourflightstart4.airline = "LuftGanza";
+            ourflightstart4.number = 481;
+            ourflightstart4.city = "Montreal";
+            ourflightstart4.terminal = 2;
+            ourflightstart4.kind = KindOfFlight.Departure;
+            ourflightstart4.status = FlightStatus.CheckIn;
+            departures[y] = ourflightstart4;
+            y++;
             Console.WriteLine("Enter the emergency information"+
             "on all flights in this airport");
             emergencyinfo = Console.ReadLine();
@@ -404,7 +376,6 @@ namespace RomanAirport
                             break;
                         }
                     case 4:
-
                         {
                             Flight ourflight;
                             FillStructure(KindOfFlight.Departure, out ourflight);
@@ -457,7 +428,7 @@ namespace RomanAirport
                             if (somef1.HasValue)
                             {
                                 somef = (SearcResult)somef1;
-                                Console.WriteLine(somef.someflight.ToString());
+                                Console.WriteLine(somef.SomeFlight.ToString());
                             }
                             else
                             {                                
@@ -465,7 +436,7 @@ namespace RomanAirport
                                 if (somef1.HasValue)
                                 {
                                     somef = (SearcResult)somef1;
-                                    Console.WriteLine(somef.someflight.ToString());
+                                    Console.WriteLine(somef.SomeFlight.ToString());
                                 }
                             }
                             PauseProg();
@@ -479,7 +450,7 @@ namespace RomanAirport
                             if (somef2.HasValue)
                             {
                                 somef = (SearcResult)somef2;
-                                Console.WriteLine(somef.someflight.ToString());
+                                Console.WriteLine(somef.SomeFlight.ToString());
                                 PauseProg();
                                 break;
                             }
@@ -488,44 +459,50 @@ namespace RomanAirport
                                 Console.WriteLine("Nothing to write!!!");
                                 PauseProg();
                                 break;
-                            }
-                            
+                            }                            
                         }
-                    case 10:                        
-                        Console.WriteLine("Enter The City:");
-                        string searchcity = Console.ReadLine();
-                        SearchByCityAndCloseTime(searchcity);
-                        PauseProg();
-                        break;
+                    case 10:
+                        {
+                                Console.WriteLine("Enter The City:");
+                                string searchcity = Console.ReadLine();
+                                SearchByCityAndCloseTime(searchcity);
+                                PauseProg();
+                                break;
+                        }
                         //Search by a city                       
                     case 11:
-                        //Search all the flights in this hour
-                        DateTime nowtime = DateTime.Now.AddHours(1);                        
-                        SearchByCityAndCloseTime("", nowtime);
-                        PauseProg();
-                        break;
+                        {
+                                //Search all the flights in this hour
+                                DateTime nowtime = DateTime.Now.AddHours(1);
+                                SearchByCityAndCloseTime("", nowtime);
+                                PauseProg();
+                                break;
+                        }
                     case 12:
-                        //Output emergency info
-                        Console.WriteLine("Attention!!!See the emergency INFO!!!");
-                        Console.WriteLine("-------------------------------------");
-                        Console.WriteLine(emergencyinfo);
-                        PauseProg();
-                        break;
+                        {
+                                //Output emergency info
+                                Console.WriteLine("Attention!!!See the emergency INFO!!!");
+                                Console.WriteLine("-------------------------------------");
+                                Console.WriteLine(emergencyinfo);
+                                PauseProg();
+                                break;
+                        }
                     case 13:
-                        sortmassiv(ref arrivals);
-                        sortmassiv(ref departures);
-
-                        break;
+                        {
+                                SortArray(ref arrivals);
+                                SortArray(ref departures);
+                                break;
+                        }
                     case 14:
                         {
                             return;
                         }
                     default:
-                        Console.WriteLine("A wrong choice!!!Repeat");
-                        break;
-
-                }
-              
+                        {
+                                Console.WriteLine("A wrong choice!!!Repeat");
+                                break;
+                        }
+                }              
             }
         }
     }
